@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 import '../models/user_model.dart';
 import '../services/api_service.dart';
+import '../widgets/app_text_field.dart';
 import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -55,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0F172A),
+      backgroundColor: kColorBg,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -65,75 +66,60 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Logo
                   Container(
                     width: 88,
                     height: 88,
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
-                        colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
+                        colors: [kColorPrimary, Color(0xFF8B5CF6)],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       borderRadius: BorderRadius.circular(24),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF6366F1).withOpacity(0.4),
+                          color: kColorPrimary.withOpacity(0.4),
                           blurRadius: 20,
                           offset: const Offset(0, 8),
                         ),
                       ],
                     ),
-                    child: const Icon(
-                      Icons.storefront_rounded,
-                      color: Colors.white,
-                      size: 44,
-                    ),
+                    child: const Icon(Icons.storefront_rounded, color: Colors.white, size: 44),
                   ),
                   const SizedBox(height: 28),
                   const Text(
                     'Selamat Datang',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 6),
                   Text(
                     'Masuk untuk mengakses katalog produk',
-                    style: TextStyle(
-                      color: Colors.white.withOpacity(0.5),
-                      fontSize: 14,
-                    ),
+                    style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 14),
                   ),
                   const SizedBox(height: 40),
-                  // Form Card
                   Container(
                     padding: const EdgeInsets.all(24),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF1E293B),
+                      color: kColorSurface,
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: Colors.white.withOpacity(0.07),
-                      ),
+                      border: Border.all(color: Colors.white.withOpacity(0.07)),
                     ),
                     child: Column(
                       children: [
-                        _buildTextField(
+                        AppTextField(
                           controller: _usernameCtrl,
+                          hint: '',
                           label: 'Username (NIM)',
                           icon: Icons.person_outline_rounded,
-                          validator: (v) => v!.isEmpty
-                              ? 'Username tidak boleh kosong'
-                              : null,
+                          validator: (v) => v!.isEmpty ? 'Username tidak boleh kosong' : null,
                         ),
                         const SizedBox(height: 16),
-                        _buildTextField(
+                        AppTextField(
                           controller: _passwordCtrl,
+                          hint: '',
                           label: 'Password',
                           icon: Icons.lock_outline_rounded,
-                          obscure: _obscurePassword,
+                          obscureText: _obscurePassword,
                           suffixIcon: IconButton(
                             icon: Icon(
                               _obscurePassword
@@ -142,12 +128,10 @@ class _LoginPageState extends State<LoginPage> {
                               color: Colors.white38,
                               size: 20,
                             ),
-                            onPressed: () => setState(() =>
-                                _obscurePassword = !_obscurePassword),
+                            onPressed: () =>
+                                setState(() => _obscurePassword = !_obscurePassword),
                           ),
-                          validator: (v) => v!.isEmpty
-                              ? 'Password tidak boleh kosong'
-                              : null,
+                          validator: (v) => v!.isEmpty ? 'Password tidak boleh kosong' : null,
                         ),
                         const SizedBox(height: 24),
                         SizedBox(
@@ -156,10 +140,9 @@ class _LoginPageState extends State<LoginPage> {
                           child: ElevatedButton(
                             onPressed: _isLoading ? null : _login,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF6366F1),
+                              backgroundColor: kColorPrimary,
                               foregroundColor: Colors.white,
-                              disabledBackgroundColor:
-                                  const Color(0xFF6366F1).withOpacity(0.5),
+                              disabledBackgroundColor: kColorPrimary.withOpacity(0.5),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(14),
                               ),
@@ -176,10 +159,7 @@ class _LoginPageState extends State<LoginPage> {
                                   )
                                 : const Text(
                                     'Login',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                                   ),
                           ),
                         ),
@@ -189,64 +169,13 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 24),
                   Text(
                     'Praktikum Pemrograman Berbasis Mobile 2026',
-                    style: TextStyle(
-                      color: Colors.white.withOpacity(0.25),
-                      fontSize: 12,
-                    ),
+                    style: TextStyle(color: Colors.white.withOpacity(0.25), fontSize: 12),
                   ),
                 ],
               ),
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String label,
-    required IconData icon,
-    bool obscure = false,
-    Widget? suffixIcon,
-    String? Function(String?)? validator,
-  }) {
-    return TextFormField(
-      controller: controller,
-      obscureText: obscure,
-      style: const TextStyle(color: Colors.white, fontSize: 15),
-      validator: validator,
-      decoration: InputDecoration(
-        labelText: label,
-        labelStyle: TextStyle(
-            color: Colors.white.withOpacity(0.5), fontSize: 14),
-        prefixIcon: Icon(icon, color: Colors.white38, size: 20),
-        suffixIcon: suffixIcon,
-        filled: true,
-        fillColor: const Color(0xFF0F172A),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide:
-              BorderSide(color: Colors.white.withOpacity(0.1)),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide:
-              BorderSide(color: Colors.white.withOpacity(0.1)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Color(0xFF6366F1)),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.redAccent),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.redAccent),
-        ),
-        errorStyle: const TextStyle(color: Colors.redAccent),
       ),
     );
   }

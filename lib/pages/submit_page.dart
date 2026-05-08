@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../constants.dart';
 import '../services/api_service.dart';
+import '../widgets/app_text_field.dart';
 
 class SubmitPage extends StatefulWidget {
   const SubmitPage({super.key});
@@ -33,15 +35,13 @@ class _SubmitPageState extends State<SubmitPage> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
-        backgroundColor: const Color(0xFF1E293B),
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        backgroundColor: kColorSurface,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: const Text('Konfirmasi Submit',
             style: TextStyle(color: Colors.white, fontSize: 18)),
         content: Text(
           'Pastikan semua data sudah benar.\nData tidak dapat diubah setelah submit!',
-          style: TextStyle(
-              color: Colors.white.withOpacity(0.7), height: 1.5),
+          style: TextStyle(color: Colors.white.withOpacity(0.7), height: 1.5),
         ),
         actions: [
           TextButton(
@@ -52,8 +52,7 @@ class _SubmitPageState extends State<SubmitPage> {
           ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
             style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF6366F1),
-                foregroundColor: Colors.white),
+                backgroundColor: kColorPrimary, foregroundColor: Colors.white),
             child: const Text('Ya, Submit'),
           ),
         ],
@@ -87,19 +86,18 @@ class _SubmitPageState extends State<SubmitPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0F172A),
+      backgroundColor: kColorBg,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1E293B),
+        backgroundColor: kColorSurface,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_rounded, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text('Submit Tugas',
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold)),
+        title: const Text(
+          'Submit Tugas',
+          style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+        ),
       ),
       body: _submitted ? _buildSuccess() : _buildForm(),
     );
@@ -119,25 +117,18 @@ class _SubmitPageState extends State<SubmitPage> {
                 color: Colors.green.withOpacity(0.15),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.check_circle_rounded,
-                  color: Colors.green, size: 56),
+              child: const Icon(Icons.check_circle_rounded, color: Colors.green, size: 56),
             ),
             const SizedBox(height: 24),
             const Text(
               'Tugas Berhasil Disubmit!',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 12),
             Text(
               'Data tugas kamu sudah masuk ke dashboard asisten praktikum.',
-              style: TextStyle(
-                  color: Colors.white.withOpacity(0.6),
-                  fontSize: 14,
-                  height: 1.5),
+              style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 14, height: 1.5),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),
@@ -148,11 +139,10 @@ class _SubmitPageState extends State<SubmitPage> {
                 icon: const Icon(Icons.home_rounded),
                 label: const Text('Kembali ke Beranda'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF6366F1),
+                  backgroundColor: kColorPrimary,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                 ),
               ),
             ),
@@ -170,7 +160,6 @@ class _SubmitPageState extends State<SubmitPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Warning banner
             Container(
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
@@ -180,33 +169,29 @@ class _SubmitPageState extends State<SubmitPage> {
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.warning_amber_rounded,
-                      color: Colors.amber, size: 20),
+                  const Icon(Icons.warning_amber_rounded, color: Colors.amber, size: 20),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
                       'Data tidak dapat diubah setelah submit. Pastikan semua data sudah benar!',
                       style: TextStyle(
-                          color: Colors.amber.shade200,
-                          fontSize: 12,
-                          height: 1.4),
+                          color: Colors.amber.shade200, fontSize: 12, height: 1.4),
                     ),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 20),
-            _label('Nama Produk'),
-            _buildField(
+            const FieldLabel('Nama Produk'),
+            AppTextField(
               controller: _nameCtrl,
               hint: 'Nama produk submission',
               icon: Icons.label_outline_rounded,
-              validator: (v) =>
-                  v!.isEmpty ? 'Nama tidak boleh kosong' : null,
+              validator: (v) => v!.isEmpty ? 'Nama tidak boleh kosong' : null,
             ),
             const SizedBox(height: 16),
-            _label('Harga (Rp)'),
-            _buildField(
+            const FieldLabel('Harga (Rp)'),
+            AppTextField(
               controller: _priceCtrl,
               hint: 'Harga produk',
               icon: Icons.payments_outlined,
@@ -219,18 +204,17 @@ class _SubmitPageState extends State<SubmitPage> {
               },
             ),
             const SizedBox(height: 16),
-            _label('Deskripsi'),
-            _buildField(
+            const FieldLabel('Deskripsi'),
+            AppTextField(
               controller: _descCtrl,
               hint: 'Deskripsi produk submission',
               icon: Icons.description_outlined,
               maxLines: 3,
-              validator: (v) =>
-                  v!.isEmpty ? 'Deskripsi tidak boleh kosong' : null,
+              validator: (v) => v!.isEmpty ? 'Deskripsi tidak boleh kosong' : null,
             ),
             const SizedBox(height: 16),
-            _label('GitHub Repository URL'),
-            _buildField(
+            const FieldLabel('GitHub Repository URL'),
+            AppTextField(
               controller: _githubCtrl,
               hint: 'https://github.com/username/repo',
               icon: Icons.link_rounded,
@@ -253,88 +237,24 @@ class _SubmitPageState extends State<SubmitPage> {
                     ? const SizedBox(
                         width: 20,
                         height: 20,
-                        child: CircularProgressIndicator(
-                            color: Colors.white, strokeWidth: 2.5))
+                        child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5),
+                      )
                     : const Icon(Icons.upload_rounded),
                 label: Text(
-                    _isLoading ? 'Submitting...' : 'Submit Tugas',
-                    style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.w600)),
+                  _isLoading ? 'Submitting...' : 'Submit Tugas',
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF6366F1),
+                  backgroundColor: kColorPrimary,
                   foregroundColor: Colors.white,
-                  disabledBackgroundColor:
-                      const Color(0xFF6366F1).withOpacity(0.5),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14)),
+                  disabledBackgroundColor: kColorPrimary.withOpacity(0.5),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                   elevation: 0,
                 ),
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _label(String text) => Padding(
-        padding: const EdgeInsets.only(bottom: 8),
-        child: Text(text,
-            style: TextStyle(
-                color: Colors.white.withOpacity(0.7),
-                fontSize: 13,
-                fontWeight: FontWeight.w600)),
-      );
-
-  Widget _buildField({
-    required TextEditingController controller,
-    required String hint,
-    required IconData icon,
-    TextInputType keyboardType = TextInputType.text,
-    List<TextInputFormatter>? inputFormatters,
-    int maxLines = 1,
-    String? Function(String?)? validator,
-  }) {
-    return TextFormField(
-      controller: controller,
-      keyboardType: keyboardType,
-      inputFormatters: inputFormatters,
-      maxLines: maxLines,
-      style: const TextStyle(color: Colors.white, fontSize: 15),
-      validator: validator,
-      decoration: InputDecoration(
-        hintText: hint,
-        hintStyle:
-            TextStyle(color: Colors.white.withOpacity(0.3), fontSize: 14),
-        prefixIcon: maxLines == 1
-            ? Icon(icon, color: Colors.white38, size: 20)
-            : null,
-        filled: true,
-        fillColor: const Color(0xFF1E293B),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.white.withOpacity(0.1)),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.white.withOpacity(0.1)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Color(0xFF6366F1)),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.redAccent),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.redAccent),
-        ),
-        errorStyle: const TextStyle(color: Colors.redAccent),
-        contentPadding: maxLines > 1
-            ? const EdgeInsets.all(16)
-            : const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       ),
     );
   }

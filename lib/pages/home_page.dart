@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../constants.dart';
 import '../models/user_model.dart';
 import '../models/product_model.dart';
 import '../services/api_service.dart';
@@ -44,9 +45,8 @@ class _HomePageState extends State<HomePage> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
-        backgroundColor: const Color(0xFF1E293B),
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        backgroundColor: kColorSurface,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: const Text('Hapus Produk',
             style: TextStyle(color: Colors.white, fontSize: 18)),
         content: Text(
@@ -61,8 +61,7 @@ class _HomePageState extends State<HomePage> {
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Hapus',
-                style: TextStyle(color: Colors.redAccent)),
+            child: const Text('Hapus', style: TextStyle(color: Colors.redAccent)),
           ),
         ],
       ),
@@ -83,8 +82,7 @@ class _HomePageState extends State<HomePage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content:
-                Text(e.toString().replaceFirst('Exception: ', '')),
+            content: Text(e.toString().replaceFirst('Exception: ', '')),
             backgroundColor: Colors.red,
           ),
         );
@@ -104,40 +102,34 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0F172A),
+      backgroundColor: kColorBg,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1E293B),
+        backgroundColor: kColorSurface,
         elevation: 0,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Katalog Produk',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold)),
+            const Text(
+              'Katalog Produk',
+              style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+            ),
             Text(
               widget.user.name,
-              style: TextStyle(
-                  color: Colors.white.withOpacity(0.5), fontSize: 12),
+              style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 12),
             ),
           ],
         ),
         actions: [
           IconButton(
-            icon:
-                const Icon(Icons.upload_rounded, color: Color(0xFF6366F1)),
+            icon: const Icon(Icons.upload_rounded, color: kColorPrimary),
             tooltip: 'Submit Tugas',
-            onPressed: () async {
-              await Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const SubmitPage()),
-              );
-            },
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const SubmitPage()),
+            ),
           ),
           IconButton(
-            icon: Icon(Icons.logout_rounded,
-                color: Colors.white.withOpacity(0.6)),
+            icon: Icon(Icons.logout_rounded, color: Colors.white.withOpacity(0.6)),
             tooltip: 'Logout',
             onPressed: _logout,
           ),
@@ -151,7 +143,7 @@ class _HomePageState extends State<HomePage> {
           );
           if (added == true) _loadProducts();
         },
-        backgroundColor: const Color(0xFF6366F1),
+        backgroundColor: kColorPrimary,
         foregroundColor: Colors.white,
         icon: const Icon(Icons.add_rounded),
         label: const Text('Tambah Produk'),
@@ -163,17 +155,14 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildBody() {
     if (_isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(color: Color(0xFF6366F1)),
-      );
+      return const Center(child: CircularProgressIndicator(color: kColorPrimary));
     }
     if (_error != null) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.error_outline_rounded,
-                color: Colors.red.shade400, size: 52),
+            Icon(Icons.error_outline_rounded, color: Colors.red.shade400, size: 52),
             const SizedBox(height: 12),
             Text(_error!,
                 style: const TextStyle(color: Colors.white70),
@@ -184,8 +173,7 @@ class _HomePageState extends State<HomePage> {
               icon: const Icon(Icons.refresh_rounded),
               label: const Text('Coba Lagi'),
               style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF6366F1),
-                  foregroundColor: Colors.white),
+                  backgroundColor: kColorPrimary, foregroundColor: Colors.white),
             ),
           ],
         ),
@@ -201,14 +189,12 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 16),
             Text(
               'Belum ada produk',
-              style: TextStyle(
-                  color: Colors.white.withOpacity(0.5), fontSize: 16),
+              style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 16),
             ),
             const SizedBox(height: 8),
             Text(
               'Tap tombol + untuk menambah produk',
-              style: TextStyle(
-                  color: Colors.white.withOpacity(0.3), fontSize: 13),
+              style: TextStyle(color: Colors.white.withOpacity(0.3), fontSize: 13),
             ),
           ],
         ),
@@ -216,7 +202,7 @@ class _HomePageState extends State<HomePage> {
     }
     return RefreshIndicator(
       onRefresh: _loadProducts,
-      color: const Color(0xFF6366F1),
+      color: kColorPrimary,
       child: ListView.builder(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
         itemCount: _products.length,
@@ -240,7 +226,7 @@ class _ProductCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: const Color(0xFF1E293B),
+        color: kColorSurface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.white.withOpacity(0.06)),
       ),
@@ -256,12 +242,11 @@ class _ProductCard extends StatelessWidget {
                   height: 44,
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
+                      colors: [kColorPrimary, Color(0xFF8B5CF6)],
                     ),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(Icons.inventory_2_rounded,
-                      color: Colors.white, size: 22),
+                  child: const Icon(Icons.inventory_2_rounded, color: Colors.white, size: 22),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -271,10 +256,7 @@ class _ProductCard extends StatelessWidget {
                       Text(
                         product.name,
                         style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                        ),
+                            color: Colors.white, fontSize: 15, fontWeight: FontWeight.w600),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -282,10 +264,7 @@ class _ProductCard extends StatelessWidget {
                       Text(
                         product.formattedPrice,
                         style: const TextStyle(
-                          color: Color(0xFF6366F1),
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                        ),
+                            color: kColorPrimary, fontSize: 14, fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
@@ -302,8 +281,7 @@ class _ProductCard extends StatelessWidget {
               const SizedBox(height: 10),
               Text(
                 product.description,
-                style: TextStyle(
-                    color: Colors.white.withOpacity(0.55), fontSize: 13),
+                style: TextStyle(color: Colors.white.withOpacity(0.55), fontSize: 13),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -311,9 +289,7 @@ class _ProductCard extends StatelessWidget {
             const SizedBox(height: 10),
             Row(
               children: [
-                _Tag(
-                    label: product.classInfo.name,
-                    color: const Color(0xFF0EA5E9)),
+                _Tag(label: product.classInfo.name, color: const Color(0xFF0EA5E9)),
                 const SizedBox(width: 8),
                 _Tag(label: 'ID: ${product.id}', color: Colors.white24),
               ],
@@ -339,11 +315,10 @@ class _Tag extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: color.withOpacity(0.3)),
       ),
-      child: Text(label,
-          style: TextStyle(
-              color: color,
-              fontSize: 11,
-              fontWeight: FontWeight.w600)),
+      child: Text(
+        label,
+        style: TextStyle(color: color, fontSize: 11, fontWeight: FontWeight.w600),
+      ),
     );
   }
 }
