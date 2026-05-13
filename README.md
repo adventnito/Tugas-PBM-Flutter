@@ -41,7 +41,7 @@ lib/
 ![Tambah Produk](screenshots/tambah%20produk.png)
 
 ### Submit Tugas
-![Submit](screenshots/halaman%20submit%20tug....png)
+![Submit Tugas](screenshots/halaman%20submit%20tugas.png)
 
 ### Submit Berhasil
 ![Submit Berhasil](screenshots/submit%20tugas%20berhasil.png)
