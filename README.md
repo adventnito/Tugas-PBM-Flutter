@@ -49,3 +49,8 @@ lib/
 - REST API (https://task.itprojects.web.id)
 - flutter_secure_storage
 - http package
+
+## Status Pengumpulan
+ **Tugas berhasil disubmit**
+- Data produk sudah masuk ke dashboard asisten praktikum
+- Repository GitHub: https://github.com/adventnito/Tugas-PBM-Flutter
