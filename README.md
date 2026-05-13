@@ -43,6 +43,9 @@ lib/
 ### Submit Tugas
 ![Submit](screenshots/halaman%20submit%20tug....png)
 
+### Submit Berhasil
+![Submit Berhasil](screenshots/submit%20tugas%20berhasil.png)
+
 ## Teknologi yang Digunakan
 - Flutter 3.41.2
 - Dart
