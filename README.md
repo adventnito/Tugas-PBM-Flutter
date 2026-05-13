@@ -1,17 +1,51 @@
-# tugas_flutter
+# Rein Store - Tugas Praktikum PBM 2026
 
-A new Flutter project.
+Aplikasi Flutter untuk manajemen katalog produk yang terintegrasi dengan REST API.
 
-## Getting Started
+## Identitas
+- **Nama:** Advent Nito Reinner Janoma
+- **NIM:** 242410102094
+- **Kelas:** PBM A
+- **Mata Kuliah:** Pemrograman Berbasis Mobile
 
-This project is a starting point for a Flutter application.
+## Fitur Aplikasi
+- Login menggunakan NIM sebagai username dan password
+- Melihat daftar draft produk
+- Menambah produk baru
+- Menghapus produk (soft delete)
+- Submit tugas dengan GitHub URL
 
-A few resources to get you started if this is your first Flutter project:
+## Struktur Project
+lib/
+├── main.dart
+├── constants.dart
+├── models/
+│   ├── user_model.dart
+│   └── product_model.dart
+├── services/
+│   └── api_service.dart
+└── pages/
+├── login_page.dart
+├── home_page.dart
+├── add_product_page.dart
+└── submit_page.dart
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Screenshot
+### Login
+![Login](screenshots/halaman%20login.png)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Katalog Produk
+![Katalog](screenshots/halaman%20katalog.png)
+
+### Tambah Produk
+![Tambah Produk](screenshots/tambah%20produk.png)
+
+### Submit Tugas
+![Submit](screenshots/halaman%20submit%20tug....png)
+
+## Teknologi yang Digunakan
+- Flutter 3.41.2
+- Dart
+- REST API (https://task.itprojects.web.id)
+- flutter_secure_storage
+- http package
